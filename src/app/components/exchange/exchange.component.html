@@ -1,0 +1,12 @@
+<div class="card">
+  <div class="card-body">
+    {{ eur.base }} => USD
+    {{ eur.rates["USD"] }}
+    <hr />
+    <div>Rate date: {{ eur.date }}</div>
+    <hr />
+    <button class="btn btn-primary" (click)="refreshRate()">
+      Refresh rate
+    </button>
+  </div>
+</div>
