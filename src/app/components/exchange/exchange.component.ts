@@ -1,6 +1,7 @@
 import {HttpClient} from "@angular/common/http";
 import {Component, OnInit} from "@angular/core";
 import {DataResponse} from "src/app/models/data";
+import {ExhangeService} from "src/app/services/exhange.service";
 
 @Component({
   selector: "app-exchange",
@@ -16,18 +17,25 @@ export class ExchangeComponent implements OnInit {
       USD: 12,
     },
   };
-  constructor(private http: HttpClient) {}
+
+  public currencies: any = {};
+
+  constructor(
+    private http: HttpClient,
+    private exhangeService: ExhangeService
+  ) {}
 
   ngOnInit(): void {
     this.loadExchange();
+    this.http.get("https://api.frankfurter.app/currencies").forEach((value) => {
+      this.currencies = Object.keys(value);
+    });
   }
 
   private loadExchange() {
-    this.http
-      .get<DataResponse>("https://api.frankfurter.app/latest?to=USD,EUR")
-      .subscribe((responsive) => {
-        this.eur = responsive;
-      });
+    this.exhangeService.loadExchange().subscribe((responsive) => {
+      this.eur = responsive;
+    });
   }
 
   refreshRate() {

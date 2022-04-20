@@ -1,7 +1,13 @@
 <div class="card">
   <div class="card-body">
-    {{ eur.base }} => USD
-    {{ eur.rates["USD"] }}
+    <select class="form-select">
+      <option selected>Open this select currencies</option>
+      <option *ngFor="let option of currencies" value="{{ option }} #value">
+        {{ option }}
+      </option>
+    </select>
+
+    {{ eur.base }} => USD {{ eur.rates["{{value}}"] }}
     <hr />
     <div>Rate date: {{ eur.date }}</div>
     <hr />
