@@ -1,18 +1,35 @@
-<div class="card">
-  <div class="card-body">
-    <select class="form-select">
-      <option selected>Open this select currencies</option>
-      <option *ngFor="let option of currencies" value="{{ option }} #value">
-        {{ option }}
-      </option>
-    </select>
+<div class="row">
+  <div class="col-md-6 mt-5">
+    <div class="card">
+      <div class="card-body">
+        <label for="" class="form-label mb-1">Choose currenfy FROM</label>
+        <select class="form-select mb-1" [(ngModel)]="from">
+          <option [value]="currency.code" *ngFor="let currency of currencyName">
+            {{ currency.name }}
+          </option>
+        </select>
 
-    {{ eur.base }} => USD {{ eur.rates["{{value}}"] }}
-    <hr />
-    <div>Rate date: {{ eur.date }}</div>
-    <hr />
-    <button class="btn btn-primary" (click)="refreshRate()">
-      Refresh rate
-    </button>
+        <label for="" class="form-label mb-1">Choose currenfy TO</label>
+        <select class="form-select mb-1" [(ngModel)]="to">
+          <option [value]="currency.code" *ngFor="let currency of currencyName">
+            {{ currency.name }}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6 mt-5">
+    <div class="card">
+      <div class="card-body">
+        Currency rate: {{ eur.rates[to] }}
+        <hr />
+        <div>Rate date: {{ eur.date }}</div>
+        <hr />
+        <button class="btn btn-primary" (click)="refreshRate()">
+          Refresh rate
+        </button>
+      </div>
+    </div>
   </div>
 </div>

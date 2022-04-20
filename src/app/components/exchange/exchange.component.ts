@@ -1,5 +1,5 @@
-import {HttpClient} from "@angular/common/http";
 import {Component, OnInit} from "@angular/core";
+import {Currency} from "src/app/models/currency";
 import {DataResponse} from "src/app/models/data";
 import {ExhangeService} from "src/app/services/exhange.service";
 
@@ -9,33 +9,35 @@ import {ExhangeService} from "src/app/services/exhange.service";
   styleUrls: ["./exchange.component.css"],
 })
 export class ExchangeComponent implements OnInit {
+  public from: string = "";
+  public to: string = "";
   public eur: DataResponse = {
     amount: 0,
-    base: "EUR",
+    base: "",
     date: "",
     rates: {
-      USD: 12,
+      // USD: 12,
     },
   };
+  public currencyName: Currency[] = [];
 
-  public currencies: any = {};
-
-  constructor(
-    private http: HttpClient,
-    private exhangeService: ExhangeService
-  ) {}
+  constructor(private exhangeService: ExhangeService) {}
 
   ngOnInit(): void {
     this.loadExchange();
-    this.http.get("https://api.frankfurter.app/currencies").forEach((value) => {
-      this.currencies = Object.keys(value);
+    this.exhangeService.loadCurrencies().subscribe(() => {
+      this.currencyName = this.exhangeService.getCurrencyNames();
+      console.log(this.currencyName);
     });
   }
 
   private loadExchange() {
-    this.exhangeService.loadExchange().subscribe((responsive) => {
-      this.eur = responsive;
-    });
+    this.exhangeService
+      .loadExchange(this.from, this.to)
+      .subscribe((responsive) => {
+        this.eur = responsive;
+        console.log(this.eur);
+      });
   }
 
   refreshRate() {
