@@ -2,14 +2,14 @@
   <div class="col-md-6 mt-5">
     <div class="card">
       <div class="card-body">
-        <label for="" class="form-label mb-1">Choose currenfy FROM</label>
+        <label for="" class="form-label mb-1">Choose currency FROM</label>
         <select class="form-select mb-1" [(ngModel)]="from">
           <option [value]="currency.code" *ngFor="let currency of currencyName">
             {{ currency.name }}
           </option>
         </select>
 
-        <label for="" class="form-label mb-1">Choose currenfy TO</label>
+        <label for="" class="form-label mb-1">Choose currency TO</label>
         <select class="form-select mb-1" [(ngModel)]="to">
           <option [value]="currency.code" *ngFor="let currency of currencyName">
             {{ currency.name }}
