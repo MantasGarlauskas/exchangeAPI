@@ -11,7 +11,8 @@ import {ExhangeService} from "src/app/services/exhange.service";
 export class ExchangeComponent implements OnInit {
   public from: string = "";
   public to: string = "";
-  public eur: DataResponse = {
+  public noCurrency: boolean = true;
+  public rate: DataResponse = {
     amount: 0,
     base: "",
     date: "",
@@ -24,7 +25,7 @@ export class ExchangeComponent implements OnInit {
   constructor(private exhangeService: ExhangeService) {}
 
   ngOnInit(): void {
-    this.loadExchange();
+    // this.loadExchange();
     this.exhangeService.loadCurrencies().subscribe(() => {
       this.currencyName = this.exhangeService.getCurrencyNames();
       console.log(this.currencyName);
@@ -32,12 +33,13 @@ export class ExchangeComponent implements OnInit {
   }
 
   private loadExchange() {
-    this.exhangeService
-      .loadExchange(this.from, this.to)
-      .subscribe((responsive) => {
-        this.eur = responsive;
-        console.log(this.eur);
-      });
+    this.exhangeService.loadExchange(this.from, this.to).subscribe({
+      next: (responsive) => {
+        this.rate = responsive;
+        this.noCurrency = false;
+      },
+      error: (error) => {},
+    });
   }
 
   refreshRate() {

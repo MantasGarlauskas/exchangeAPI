@@ -15,20 +15,24 @@
             {{ currency.name }}
           </option>
         </select>
+        <button
+          class="btn btn-primary mt-2"
+          (click)="refreshRate()"
+          [disabled]="from == '' && to == ''"
+        >
+          Refresh rate
+        </button>
       </div>
     </div>
   </div>
 
   <div class="col-md-6 mt-5">
-    <div class="card">
+    <div class="card" *ngIf="!noCurrency">
       <div class="card-body">
-        Currency rate: {{ eur.rates[to] }}
+        Currency rate: {{ rate.rates[to] }}
         <hr />
-        <div>Rate date: {{ eur.date }}</div>
+        <div>Rate date: {{ rate.date }}</div>
         <hr />
-        <button class="btn btn-primary" (click)="refreshRate()">
-          Refresh rate
-        </button>
       </div>
     </div>
   </div>
